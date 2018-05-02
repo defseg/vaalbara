@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup, SoupStrainer, NavigableString
 from urllib2 import urlopen
 from collections import namedtuple
 from menu import menuize, build_submenu
@@ -38,5 +38,8 @@ def parse_one(li):
   location     = location_el.contents[0].strip()        if location_el     is not None else "No location given"
   calendar_url = calendar_url_el.get("href")            if calendar_url_el is not None else "No calendar URL given"
   return CalendarEntry(title=title, time=time_str, location=location, calendar_url=calendar_url)
+
+def parse_time(time_str_el):
+  return "".join([c if isinstance(c, NavigableString) else parse_time(c.contents) for c in time_str_el]).strip()
 
 CalendarEntry = namedtuple("CalendarEntry", ["title", "time", "location", "calendar_url"])

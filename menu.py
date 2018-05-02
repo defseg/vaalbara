@@ -12,6 +12,7 @@ def navigate(e):
     open_in_browser(e.event_obj.calendar_url)
 
 def build_submenu(title, contents):
+  # Build a submenu from a title and an array of MenuItems.
   submenu_item = Gtk.MenuItem(title)
   submenu = Gtk.Menu()
   submenu_item.set_submenu(submenu)
