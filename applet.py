@@ -1,5 +1,6 @@
 from gi.repository import Gtk
 from gi.repository import AppIndicator3
+from parse_calendar import build_calendar_items
 import signal
 
 APPINDICATOR_ID = "bostoncalendar"
@@ -15,11 +16,18 @@ def main():
 
 def build_menu():
   menu = Gtk.Menu()
-  item_quit = Gtk.MenuItem("Quit")
-  item_quit.connect("activate", quit)
-  menu.append(item_quit)
+  for item in build_menu_items():
+    menu.append(item)
   menu.show_all()
   return menu
+
+def build_menu_items():
+  return build_calendar_items() + build_system_items()
+
+def build_system_items():
+  item_quit = Gtk.MenuItem("Quit")
+  item_quit.connect("activate", quit)
+  return [item_quit]
 
 def quit(event_source):
   Gtk.main_quit()
