@@ -2,6 +2,7 @@ from gi.repository import Gtk
 from bs4 import BeautifulSoup, SoupStrainer
 from urllib2 import urlopen
 from collections import namedtuple
+from webbrowser import open as open_in_browser
 import datetime
 
 last_parsed_at = datetime.datetime.min
@@ -18,7 +19,14 @@ def set_events(soup):
   events = parse(soup)
 
 def menuize(event):
-  return Gtk.MenuItem(event.title)
+  menu_item = Gtk.MenuItem(event.title)
+  menu_item.connect("activate", navigate)
+  menu_item.event_obj = event
+  return menu_item
+
+def navigate(e):
+  if e.event_obj and e.event_obj.calendar_url:
+    open_in_browser(e.event_obj.calendar_url)
 
 def fetch():
   html = urlopen("http://www.thebostoncalendar.com/").read()
