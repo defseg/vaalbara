@@ -1,6 +1,6 @@
 from gi.repository import Gtk
 from gi.repository import AppIndicator3
-from parse_calendar_stub import build_calendar_items
+from parse_calendar import build_calendar_items
 import signal
 
 APPINDICATOR_ID = "bostoncalendar"

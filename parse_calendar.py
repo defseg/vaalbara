@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup, SoupStrainer, NavigableString
 from urllib2 import urlopen
 from collections import namedtuple
 from menu import menuize, build_submenu
+from bucket_schemas import boston_calendar_schema
 import datetime
 
 last_parsed_at = datetime.datetime.min
@@ -13,7 +14,13 @@ def build_calendar_items():
   return [build_submenu("Boston Calendar", build_menu_contents())]
 
 def build_menu_contents():
-  return [menuize(event) for event in events]
+  bucketing = boston_calendar_schema.bucketize(events)
+  bucketing_keys = bucketing.keys()
+  contents = []
+  for i in bucketing_keys:
+    if bucketing[i]:
+      contents.append(build_submenu(boston_calendar_schema.name(i), [menuize(e) for e in bucketing[i]]))
+  return contents
 
 def set_events(soup):
   global last_parsed_at, events
@@ -33,10 +40,10 @@ def parse_one(li):
   time_str_el     = li.select_one("p.time")
   location_el     = li.select_one("p.location")
   calendar_url_el = li.select_one("a[itemprop=url]")
-  title        = title_el.contents                      if title_el        is not None else "No title given"
-  time_str     = time_str_el.contents[0].strip() + u"m" if time_str_el     is not None else "No time given"
-  location     = location_el.contents[0].strip()        if location_el     is not None else "No location given"
-  calendar_url = calendar_url_el.get("href")            if calendar_url_el is not None else "No calendar URL given"
+  title        = title_el.contents               if title_el        is not None else "No title given"
+  time_str     = parse_time(time_str_el)         if time_str_el     is not None else "No time given"
+  location     = location_el.contents[0].strip() if location_el     is not None else "No location given"
+  calendar_url = calendar_url_el.get("href")     if calendar_url_el is not None else "No calendar URL given"
   return CalendarEntry(title=title, time=time_str, location=location, calendar_url=calendar_url)
 
 def parse_time(time_str_el):
