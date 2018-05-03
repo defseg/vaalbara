@@ -40,7 +40,7 @@ def parse_one(li):
   time_str_el     = li.select_one("p.time")
   location_el     = li.select_one("p.location")
   calendar_url_el = li.select_one("a[itemprop=url]")
-  title        = title_el.contents               if title_el        is not None else "No title given"
+  title        = title_el.contents[0]            if title_el        is not None else "No title given"
   time_str     = parse_time(time_str_el)         if time_str_el     is not None else "No time given"
   location     = location_el.contents[0].strip() if location_el     is not None else "No location given"
   calendar_url = calendar_url_el.get("href")     if calendar_url_el is not None else "No calendar URL given"
