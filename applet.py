@@ -25,9 +25,10 @@ def build_menu_items():
   return build_calendar_items() + build_system_items()
 
 def build_system_items():
+  separator = Gtk.SeparatorMenuItem.new()
   item_quit = Gtk.MenuItem("Quit")
   item_quit.connect("activate", quit)
-  return [item_quit]
+  return [separator, item_quit]
 
 def quit(event_source):
   Gtk.main_quit()
