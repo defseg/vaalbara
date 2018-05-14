@@ -2,6 +2,8 @@ from gi.repository import Gtk
 from webbrowser import open as open_in_browser
 
 def menuize(event):
+  # Create a menu item from an event, and bind clicking on the event to
+  # opening the event's Boston Calendar page.
   menu_item = Gtk.MenuItem(event.title)
   menu_item.connect("activate", navigate)
   menu_item.event_obj = event
@@ -16,6 +18,10 @@ def build_submenu(title, contents):
   submenu_item = Gtk.MenuItem(title)
   submenu = Gtk.Menu()
   submenu_item.set_submenu(submenu)
-  for item in contents:
-    submenu.append(item)
+  append_all(submenu, contents)
   return submenu_item
+
+def append_all(menu, contents):
+  for item in contents:
+    menu.append(item)
+  return menu

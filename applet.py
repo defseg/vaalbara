@@ -1,6 +1,7 @@
 from gi.repository import Gtk
 from gi.repository import AppIndicator3
 from parse_calendar import build_calendar_items
+from menu import append_all
 import signal
 
 APPINDICATOR_ID = "bostoncalendar"
@@ -16,8 +17,7 @@ def main():
 
 def build_menu():
   menu = Gtk.Menu()
-  for item in build_menu_items():
-    menu.append(item)
+  append_all(menu, build_menu_items())
   menu.show_all()
   return menu
 
