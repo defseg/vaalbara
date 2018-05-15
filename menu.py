@@ -1,5 +1,6 @@
-from gi.repository import Gtk
+from gi.repository import Gtk, AppIndicator3
 from webbrowser import open as open_in_browser
+import signal
 
 def menuize(event):
   # Create a menu item from an event, and bind clicking on the event to
@@ -25,3 +26,13 @@ def append_all(menu, contents):
   for item in contents:
     menu.append(item)
   return menu
+
+def init_menu():
+  ID       = "BostonCalendar"
+  ICON     = "todo"
+  CATEGORY = AppIndicator3.IndicatorCategory.SYSTEM_SERVICES
+  indicator = AppIndicator3.Indicator.new(ID, ICON, CATEGORY)
+  indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
+  # Make it possible to ctrl+c
+  signal.signal(signal.SIGINT, signal.SIG_DFL)
+  return indicator

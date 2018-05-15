@@ -1,17 +1,12 @@
 from gi.repository import Gtk
-from gi.repository import AppIndicator3
 from parse_calendar import build_calendar_items
-from menu import append_all
-import signal
+from menu import append_all, init_menu
 
 APPINDICATOR_ID = "bostoncalendar"
 
 def main():
-  indicator = AppIndicator3.Indicator.new(APPINDICATOR_ID, "asdf", AppIndicator3.IndicatorCategory.SYSTEM_SERVICES)
-  indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
+  indicator = init_menu()
   indicator.set_menu(build_menu())
-  # Make it possible to ctrl+c
-  signal.signal(signal.SIGINT, signal.SIG_DFL)
   # Start GTK main loop
   Gtk.main()
 
