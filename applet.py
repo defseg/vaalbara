@@ -1,5 +1,5 @@
 from gi.repository import Gtk
-from parse_calendar import build_calendar_items
+from widgets.bostoncalendar.parse_calendar import build_calendar_items
 from menu import append_all, init_menu
 
 APPINDICATOR_ID = "bostoncalendar"
