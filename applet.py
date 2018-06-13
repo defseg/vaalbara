@@ -11,6 +11,10 @@ def main():
   indicator.go()
 
 def build_menu_items():
+  """ Call every loaded widget and concat them together into an XML description
+  of the full menu to build. Widgets may return either an ElementTree element 
+  or a string containing valid XML.
+  TODO: DTD """
   widgets = [build_calendar_items, build_system_items]
   widgets_xml = [w() for w in widgets]
   menu_xml = ET.Element("menu-base")
