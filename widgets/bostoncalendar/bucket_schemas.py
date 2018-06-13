@@ -1,3 +1,5 @@
+'''Define bucket schema used in parse_calendar.'''
+
 from bucket_schema import BucketSchema
 from dateutil.parser import parse as parse_date
 
