@@ -1,32 +1,35 @@
-from gi.repository import Gtk
-from widgets.bostoncalendar.parse_calendar import build_calendar_items
-from menu import append_all, init_menu
+# from widgets.bostoncalendar.parse_calendar_stub import build_calendar_items
+from menus.gtk.indicator import Indicator
+from menus.xml_to_obj import parse
+import xml.etree.ElementTree as ET
 
 APPINDICATOR_ID = "bostoncalendar"
 
 def main():
-  indicator = init_menu()
-  indicator.set_menu(build_menu())
-  # Start GTK main loop
-  Gtk.main()
-
-def build_menu():
-  menu = Gtk.Menu()
-  append_all(menu, build_menu_items())
-  menu.show_all()
-  return menu
+  indicator = Indicator()
+  indicator.set_menu(build_menu_items())
+  indicator.go()
 
 def build_menu_items():
-  return build_calendar_items() + build_system_items()
+  widgets = [build_system_items]
+  widgets_xml = [w() for w in widgets]
+  menu_xml = ET.Element("menu-base")
+  for w in widgets_xml:
+    if w.__class__.__name__ == 'Element':
+      menu_xml.append(w)
+    elif w.__class__.__name__ == 'str':
+      menu_xml.append(ET.fromstring(w))
+    else:
+      raise AppletError("Menu was given something besides an element or a str: {}".format(w.__class__.__name__))
+  return parse(menu_xml)
 
 def build_system_items():
-  separator = Gtk.SeparatorMenuItem.new()
-  item_quit = Gtk.MenuItem("Quit")
-  item_quit.connect("activate", quit)
-  return [separator, item_quit]
-
-def quit(event_source):
-  Gtk.main_quit()
+  quit_button = ET.Element("item", {"action": "quit"})
+  quit_button.text = "Quit"
+  return quit_button
 
 if __name__ == "__main__":
   main()
+
+class AppletError(Exception):
+  pass

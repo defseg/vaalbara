@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup, SoupStrainer, NavigableString
 from urllib2 import urlopen
 from collections import namedtuple
-from menu import menuize, build_submenu
+#from menu import menuize, build_submenu
 from bucket_schemas import boston_calendar_schema
 import datetime
 
