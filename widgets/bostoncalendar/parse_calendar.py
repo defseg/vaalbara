@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup, SoupStrainer, NavigableString
 from urllib2 import urlopen
-from collections import namedtuple
-#from menu import menuize, build_submenu
+import xml.etree.ElementTree as ET
 from bucket_schemas import boston_calendar_schema
 import datetime
 
@@ -11,16 +10,22 @@ events = False
 def build_calendar_items():
   if datetime.datetime.now().date() > last_parsed_at.date():
     set_events(fetch())
-  return [build_submenu("Boston Calendar", build_menu_contents())]
+  return build_menu_contents()
 
 def build_menu_contents():
   bucketing = boston_calendar_schema.bucketize(events)
   bucketing_keys = bucketing.keys()
-  contents = []
+  main_menu = ET.Element('menu')
+  main_menu.text = 'Boston Calendar'
   for i in bucketing_keys:
-    if bucketing[i]:
-      contents.append(build_submenu(boston_calendar_schema.name(i), [menuize(e) for e in bucketing[i]]))
-  return contents
+    if bucketing[i]: # time block - contains array of dicts
+      bucket = ET.SubElement(main_menu, 'menu')
+      bucket.text = boston_calendar_schema.name(i)
+      for item in bucketing[i]:
+        item_text = item.pop('title')
+        item_el = ET.SubElement(bucket, 'item', item)
+        item_el.text = item_text
+  return main_menu
 
 def set_events(soup):
   global last_parsed_at, events
@@ -44,9 +49,7 @@ def parse_one(li):
   time_str     = parse_time(time_str_el)         if time_str_el     is not None else "No time given"
   location     = location_el.contents[0].strip() if location_el     is not None else "No location given"
   calendar_url = calendar_url_el.get("href")     if calendar_url_el is not None else "No calendar URL given"
-  return CalendarEntry(title=title, time=time_str, location=location, calendar_url=calendar_url)
+  return {'title': title, 'time': time_str, 'location': location, 'calendar_url': calendar_url}
 
 def parse_time(time_str_el):
   return "".join([c if isinstance(c, NavigableString) else parse_time(c.contents) for c in time_str_el]).strip()
-
-CalendarEntry = namedtuple("CalendarEntry", ["title", "time", "location", "calendar_url"])

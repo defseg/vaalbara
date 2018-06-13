@@ -1,4 +1,4 @@
-from widgets.bostoncalendar.parse_calendar_stub import build_calendar_items
+from widgets.bostoncalendar.parse_calendar import build_calendar_items
 from menus.gtk.indicator import Indicator
 from menus.xml_to_obj import parse
 import xml.etree.ElementTree as ET
