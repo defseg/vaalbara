@@ -34,7 +34,6 @@ def _build_and_append_all(obj):
   return menu
 
 def _dispatch_item_action(obj):
-  print "Dispatching {0} on obj {1}".format(obj.action, obj.text)
   dispatcher = {
     'navigate': _curry(_navigate, obj.data.get('url')),
     'quit': Gtk.main_quit,
