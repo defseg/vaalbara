@@ -4,7 +4,7 @@ from dateutil.parser import parse as parse_date
 boston_calendar_schema = BucketSchema()
 def schema_unknown(entry):
   try:
-    parse_date(entry.time)
+    parse_date(entry['time'])
   except:
     return True
   return False

@@ -2,50 +2,28 @@
 from parse_calendar import CalendarEntry
 # from menu import menuize, build_submenu
 from bucket_schemas import boston_calendar_schema
+import xml.etree.ElementTree as ET
 
 _events = []
-_events.append({"title":"Test item 1", "time":"Wednesday, May 02, 2018 07:00 A","location":"Nowhere", "calendar_url":"https://www.example.com"})
-_events.append({"title":"Test item 2", "time":"Wednesday, May 02, 2018 07:00 P", "location":"Everywhere", "calendar_url":"https://www.asdf.com"})
-_events.append({"title":"Test item 3", "time":"Wednesday, May 02, 2018 goes until 05/03", "location":"Anywhere", "calendar_url":"https://en.wikipedia.org"})
-_events.append({"title":"Test item 4", "time":"Wednesday, May 02, 2018 06:00 P", "location":"Somewhere", "calendar_url":"https://www.html5zombo.com"})
+_events.append({'title':"Test item 1", "action":"navigate", "time":"Wednesday, May 02, 2018 07:00 A",          "location":"Nowhere"   , "url":"https://www.example.com"})
+_events.append({'title':"Test item 2", "action":"navigate", "time":"Wednesday, May 02, 2018 07:00 P",          "location":"Everywhere", "url":"https://www.asdf.com"})
+_events.append({'title':"Test item 3", "action":"navigate", "time":"Wednesday, May 02, 2018 goes until 05/03", "location":"Anywhere"  , "url":"https://en.wikipedia.org"})
+_events.append({'title':"Test item 4", "action":"navigate", "time":"Wednesday, May 02, 2018 06:00 P",          "location":"Somewhere" , "url":"https://www.html5zombo.com"})
 
-#def build_calendar_items():
-  #return [build_submenu("Boston Calendar", build_menu_contents(_events))]
-
-# def build_menu_contents(events):
-#   bucketing = boston_calendar_schema.bucketize(events)
-#   bucketing_keys = bucketing.keys()
-#   contents = []
-#   for i in bucketing_keys:
-#     if bucketing[i]:
-#       contents.append([boston_calendar_schema.name(i), [e for e in bucketing[i]]])
-#   return contents
+def build_menu_contents(events):
+  bucketing = boston_calendar_schema.bucketize(events)
+  bucketing_keys = bucketing.keys()
+  main_menu = ET.Element('menu')
+  main_menu.text = 'Boston Calendar'
+  for i in bucketing_keys:
+    if bucketing[i]: # time block - contains array of dicts
+      bucket = ET.SubElement(main_menu, 'menu')
+      bucket.text = boston_calendar_schema.name(i)
+      for item in bucketing[i]:
+        item_text = item.pop('title')
+        item_el = ET.SubElement(bucket, 'item', item)
+        item_el.text = item_text
+  return main_menu
 
 def build_calendar_items():
-  return """<menu>
-    Boston Calendar
-    <menu>
-      Morning
-      <item time="Wednesday, May 02, 2018 07:00 A" location="Nowhere" url="https://www.example.com" action="navigate">
-        Test item 1
-      </item>
-    </menu>
-    <menu>
-      Evening
-      <item time="Wednesday, May 02, 2018 06:00 P" location="Somewhere" url="https://www.html5zombo.com" action="navigate">
-        Test item 4
-      </item>
-    </menu>
-    <menu>
-      Night
-      <item time="Wednesday, May 02, 2018 07:00 P" location="Everywhere" url="https://www.asdf.com" action="navigate">
-        Test item 2
-      </item>
-    </menu>
-    <menu>
-      Multi-Day
-      <item time="Wednesday, May 02, 2018 goes until 05/03" location="Anywhere" url="https://en.wikipedia.org" action="navigate">
-        Test item 3
-      </item>
-    </menu>
-  </menu>"""
+  return build_menu_contents(_events)
