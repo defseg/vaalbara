@@ -1,4 +1,4 @@
-# from widgets.bostoncalendar.parse_calendar_stub import build_calendar_items
+from widgets.bostoncalendar.parse_calendar_stub import build_calendar_items
 from menus.gtk.indicator import Indicator
 from menus.xml_to_obj import parse
 import xml.etree.ElementTree as ET
@@ -11,7 +11,7 @@ def main():
   indicator.go()
 
 def build_menu_items():
-  widgets = [build_system_items]
+  widgets = [build_calendar_items, build_system_items]
   widgets_xml = [w() for w in widgets]
   menu_xml = ET.Element("menu-base")
   for w in widgets_xml:

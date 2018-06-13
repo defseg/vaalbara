@@ -26,7 +26,7 @@ def parse(el):
 
 def _parse_menu(el):
   text = el.text or ""
-  curr = Menu(text)
+  curr = Menu(text.strip())
   curr.add([parse(child) for child in el.findall('*')])
   return curr
 

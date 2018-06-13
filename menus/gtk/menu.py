@@ -23,7 +23,7 @@ def build_menu(obj):
 
 def build_item(obj):
   item = Gtk.MenuItem(obj.text)
-  if hasattr(obj, 'action'):
+  if hasattr(obj, 'action') and obj.action:
     item.connect('activate', _dispatch_item_action(obj))
   return item
 
@@ -34,9 +34,11 @@ def _build_and_append_all(obj):
   return menu
 
 def _dispatch_item_action(obj):
+  print "Dispatching {0} on obj {1}".format(obj.action, obj.text)
   dispatcher = {
     'navigate': _curry(_navigate, obj.data.get('url')),
-    'quit': Gtk.main_quit
+    'quit': Gtk.main_quit,
+    None: None
   }
   return dispatcher[obj.action]
 
@@ -44,11 +46,7 @@ def _curry(func, arg):
   # TODO: is there a way to curry for named arguments instead of just positional ones?
   return lambda *a, **b: func(arg, *a, **b)
 
-def _wrap(func, obj):
-  # Gtk.MenuItem#connect sends an argument, so we need to get rid of it
-  return func
-
-def _navigate(url):
+def _navigate(url, foos):
   if url:
     open_in_browser(url)
 
