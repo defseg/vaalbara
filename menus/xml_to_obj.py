@@ -41,6 +41,8 @@ class Menu:
       self.items = []
     else:
       self.items = items
+  def __repr__(self):
+    return 'Menu: {}; items: {}'.format(self.text, len(self.items))
   def append(self, item):
     self.items.append(item)
   def add(self, new_items):
@@ -52,6 +54,8 @@ class MenuItem:
     action = data.pop('action', None)
     self.data = data
     self.action = action
+  def __repr__(self):
+    return 'MenuItem: {}'.format(self.text)
 
 class MenuParserError(Exception):
   pass
