@@ -50,7 +50,7 @@ def parse_one(li):
   time_str     = parse_time(time_str_el)         if time_str_el     is not None else "No time given"
   location     = location_el.contents[0].strip() if location_el     is not None else "No location given"
   calendar_url = calendar_url_el.get("href")     if calendar_url_el is not None else "No calendar URL given"
-  return {'title': title, 'time': time_str, 'location': location, 'calendar_url': calendar_url}
+  return {'title': title, 'time': time_str, 'location': location, 'url': calendar_url}
 
 def parse_time(time_str_el):
   return "".join([c if isinstance(c, NavigableString) else parse_time(c.contents) for c in time_str_el]).strip()
