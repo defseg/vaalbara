@@ -25,6 +25,7 @@ def build_menu_contents():
         item_text = item.pop('title')
         item_el = ET.SubElement(bucket, 'item', item)
         item_el.text = item_text
+        item_el.attrib['action'] = 'navigate'
   return main_menu
 
 def set_events(soup):

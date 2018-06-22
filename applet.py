@@ -1,5 +1,5 @@
 from widgets.bostoncalendar.parse_calendar import build_calendar_items
-from menus.gtk.indicator import Indicator
+from menus.windows.indicator import Indicator
 from menus.xml_to_obj import parse
 import xml.etree.ElementTree as ET
 
@@ -14,6 +14,7 @@ def build_menu_items():
   or a string containing valid XML.
   TODO: DTD '''
   widgets = [build_calendar_items, build_system_items]
+  widgets = [build_calendar_items]
   widgets_xml = [w() for w in widgets]
   menu_xml = ET.Element("menu-base")
   for w in widgets_xml:
@@ -27,7 +28,7 @@ def build_menu_items():
 
 def build_system_items():
   quit_button = ET.Element("item", {"action": "quit"})
-  quit_button.text = "Quit"
+  quit_button.text = "Quit" 
   return quit_button
 
 if __name__ == "__main__":
