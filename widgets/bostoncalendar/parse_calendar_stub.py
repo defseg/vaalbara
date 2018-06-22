@@ -19,7 +19,6 @@ def build_menu_contents(events):
       bucket = ET.SubElement(main_menu, 'menu')
       bucket.text = boston_calendar_schema.name(i)
       for item in bucketing[i]:
-        print item
         item_text = item.pop('title')
         item_el = ET.SubElement(bucket, 'item', item)
         item_el.text = item_text

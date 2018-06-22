@@ -29,9 +29,6 @@ def _navigate(url, foo = None):
   if url:
     open_in_browser(url)
 
-def _print(text):
-  print text
-
 def _do_nothing():
   pass
 
