@@ -3,8 +3,6 @@ from menus.gtk.indicator import Indicator
 from menus.xml_to_obj import parse
 import xml.etree.ElementTree as ET
 
-APPINDICATOR_ID = "bostoncalendar"
-
 def main():
   indicator = Indicator()
   indicator.set_menu(build_menu_items())

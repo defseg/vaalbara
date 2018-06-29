@@ -2,6 +2,10 @@ from gi.repository import Gtk, AppIndicator3
 import menu as Menu
 import signal
 
+# kill GTK warning spew
+import warnings
+warnings.filterwarnings("ignore")
+
 class Indicator:
   def __init__(self):
     ID       = "BostonCalendar"
