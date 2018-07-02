@@ -1,8 +1,10 @@
 from webbrowser import open as open_in_browser
 from gi.repository import Gtk
 
+
 def build_menu_base(obj):
   menu_base = _build_and_append_all(obj)
+  menu_base.append(_build_quit_button())
   menu_base.show_all()
   return menu_base
 
@@ -32,6 +34,11 @@ def _build_and_append_all(obj):
   for i in obj.items:
     menu.append(_build(i))
   return menu
+
+def _build_quit_button():
+  quit_button = Gtk.MenuItem('Quit')
+  quit_button.connect('activate', Gtk.main_quit)
+  return quit_button
 
 def _dispatch_item_action(obj):
   dispatcher = {

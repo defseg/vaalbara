@@ -1,5 +1,5 @@
 from widgets.bostoncalendar.parse_calendar import build_calendar_items
-from menus.windows.indicator import Indicator
+from menus.gtk.indicator import Indicator
 from menus.xml_to_obj import parse
 import xml.etree.ElementTree as ET
 
