@@ -4,12 +4,12 @@ import signal
 
 # kill GTK warning spew
 import warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings('ignore')
 
 class Indicator:
   def __init__(self):
-    ID       = "BostonCalendar"
-    ICON     = "todo"
+    ID       = 'Vaalbara'
+    ICON     = 'todo'
     CATEGORY = AppIndicator3.IndicatorCategory.SYSTEM_SERVICES
     self.indicator = AppIndicator3.Indicator.new(ID, ICON, CATEGORY)
     self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)

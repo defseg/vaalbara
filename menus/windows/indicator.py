@@ -10,5 +10,5 @@ class Indicator:
 
 	def go(self):
 		#                icon  hover_text
-		with SysTrayIcon(None, 'TODO replace this', self.menu_tuples) as systray:
+		with SysTrayIcon(None, 'Vaalbara', self.menu_tuples) as systray:
 			pass

@@ -22,10 +22,10 @@ def parse(el):
   elif el.tag == 'item':
     return _parse_item(el)
   else:
-    raise MenuParserError("Tag isn't menu or item: {}".format(el.tag))
+    raise MenuParserError('Tag isn\'t menu or item: {}'.format(el.tag))
 
 def _parse_menu(el):
-  text = el.text or ""
+  text = el.text or ''
   curr = Menu(text.strip())
   curr.add([parse(child) for child in el.findall('*')])
   return curr

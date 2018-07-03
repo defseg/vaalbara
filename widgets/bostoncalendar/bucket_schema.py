@@ -46,4 +46,4 @@ class BucketSchema:
   def name(self, name_order):
     return self.buckets[name_order].name
 
-Bucket = namedtuple("Bucket", ["name", "test"])
+Bucket = namedtuple('Bucket', ['name', 'test'])

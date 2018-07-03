@@ -3,10 +3,10 @@ from bucket_schemas import boston_calendar_schema
 import xml.etree.ElementTree as ET
 
 _events = []
-_events.append({'title':"Test item 1", "action":"navigate", "time":"Wednesday, May 02, 2018 07:00 A",          "location":"Nowhere"   , "url":"https://www.example.com"})
-_events.append({'title':"Test item 2", "action":"navigate", "time":"Wednesday, May 02, 2018 07:00 P",          "location":"Everywhere", "url":"https://www.asdf.com"})
-_events.append({'title':"Test item 3", "action":"navigate", "time":"Wednesday, May 02, 2018 goes until 05/03", "location":"Anywhere"  , "url":"https://en.wikipedia.org"})
-_events.append({'title':"Test item 4", "action":"navigate", "time":"Wednesday, May 02, 2018 06:00 P",          "location":"Somewhere" , "url":"https://www.html5zombo.com"})
+_events.append({'title':'Test item 1', 'action':'navigate', 'time':'Wednesday, May 02, 2018 07:00 A',          'location':'Nowhere'   , 'url':'https://www.example.com'})
+_events.append({'title':'Test item 2', 'action':'navigate', 'time':'Wednesday, May 02, 2018 07:00 P',          'location':'Everywhere', 'url':'https://www.asdf.com'})
+_events.append({'title':'Test item 3', 'action':'navigate', 'time':'Wednesday, May 02, 2018 goes until 05/03', 'location':'Anywhere'  , 'url':'https://en.wikipedia.org'})
+_events.append({'title':'Test item 4', 'action':'navigate', 'time':'Wednesday, May 02, 2018 06:00 P',          'location':'Somewhere' , 'url':'https://www.html5zombo.com'})
 
 def build_menu_contents(events):
   bucketing = boston_calendar_schema.bucketize(events)

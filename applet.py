@@ -34,22 +34,22 @@ def build_menu_items(widgets):
   or a string containing valid XML.
   TODO: DTD'''
   widgets_xml = [w.main() for w in widgets]
-  menu_xml = ET.Element("menu-base")
+  menu_xml = ET.Element('menu-base')
   for w in widgets_xml:
     if w.__class__.__name__ == 'Element':
       menu_xml.append(w)
     elif w.__class__.__name__ == 'str':
       menu_xml.append(ET.fromstring(w))
     else:
-      raise AppletError("Menu was given something besides an element or a str: {}".format(w.__class__.__name__))
+      raise AppletError('Menu was given something besides an element or a str: {}'.format(w.__class__.__name__))
   return parse(menu_xml)
 
 def build_system_items():
-  quit_button = ET.Element("item", {"action": "quit"})
-  quit_button.text = "Quit" 
+  quit_button = ET.Element('item', {'action': 'quit'})
+  quit_button.text = 'Quit' 
   return quit_button
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   main()
 
 class AppletError(Exception):

@@ -1,4 +1,4 @@
-"""Import the Indicator module appropriate for the system."""
+'''Import the Indicator module appropriate for the system.'''
 
 import platform
 system = platform.system()

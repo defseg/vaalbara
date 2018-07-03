@@ -15,7 +15,7 @@ def _build(obj):
   elif obj_class == 'MenuItem':
     return build_item(obj)
   else:
-    raise GtkMenuBuilderError("Wrong type: {}".format(obj_class))
+    raise GtkMenuBuilderError('Wrong type: {}'.format(obj_class))
 
 def build_menu(obj):
   menu = _build_and_append_all(obj)

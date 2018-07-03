@@ -11,7 +11,7 @@ def _build(obj):
   elif obj_class == 'MenuItem':
     return (obj.text, None, _dispatch_item_action(obj))
   else:
-    raise MenuBuilderError("Wrong type: {}".format(obj_class))
+    raise MenuBuilderError('Wrong type: {}'.format(obj_class))
 
 def _dispatch_item_action(obj):
   dispatcher = {
