@@ -1,2 +1,2 @@
 config = {}
-config['widgets'] = ['bostoncalendar']
+config['disabled_widgets'] = set([])
