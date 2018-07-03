@@ -1,20 +1,24 @@
-from widgets.bostoncalendar.parse_calendar import build_calendar_items
+from config import config
+import importlib
 from menus.indicator import Indicator
 from menus.xml_to_obj import parse
 import xml.etree.ElementTree as ET
 
 def main():
+  widgets = import_widgets(config)
   indicator = Indicator()
-  indicator.set_menu(build_menu_items())
+  indicator.set_menu(build_menu_items(widgets))
   indicator.go()
 
-def build_menu_items():
+def import_widgets(config):
+  return [importlib.import_module('widgets.{}'.format(w)) for w in config['widgets']]
+
+def build_menu_items(widgets):
   ''' Call every loaded widget and concat them together into an XML description
   of the full menu to build. Widgets may return either an ElementTree element 
   or a string containing valid XML.
   TODO: DTD '''
-  widgets = [build_calendar_items]
-  widgets_xml = [w() for w in widgets]
+  widgets_xml = [w.main() for w in widgets]
   menu_xml = ET.Element("menu-base")
   for w in widgets_xml:
     if w.__class__.__name__ == 'Element':

@@ -1,0 +1,2 @@
+config = {}
+config['widgets'] = ['bostoncalendar']
