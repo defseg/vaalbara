@@ -34,6 +34,7 @@ def build_menu_items(widgets):
   or a string containing valid XML.
   TODO: DTD'''
   widgets_xml = [w.main() for w in widgets]
+  print ET.tostring(widgets_xml[0], encoding='utf8')
   menu_xml = ET.Element('menu-base')
   for w in widgets_xml:
     if w.__class__.__name__ == 'Element':
