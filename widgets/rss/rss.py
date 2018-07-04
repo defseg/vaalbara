@@ -3,8 +3,8 @@
 from urllib2 import urlopen
 import xml.etree.ElementTree as ET
 
-def main():
-	return fetch_all(['https://news.ycombinator.com/rss'])
+def main(config):
+	return fetch_all(['https://news.ycombinator.com/rss', 'https://lobste.rs/rss'])
 
 def fetch_all(feeds):
 	menu = ET.Element('menu')

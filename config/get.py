@@ -21,7 +21,11 @@ def ensure_user_dirs(*dirs):
         return _path
     return reduce(_ensure_dir, dirs, os.path.expanduser('~'))
 
+config_defaults = '''\
+[vaalbara]
+disabled_widgets = []
+'''
+
 config_filename = 'config.ini'
-config_defaults = ''
 config_path = ['.vaalbara']
 config_loc = ensure_file(config_filename, config_defaults, *config_path)

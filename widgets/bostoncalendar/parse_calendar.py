@@ -9,7 +9,8 @@ import datetime
 last_parsed_at = datetime.datetime.min
 events = False
 
-def build_calendar_items():
+def build_calendar_items(config):
+  # we don't do anything with the config yet
   if datetime.datetime.now().date() > last_parsed_at.date():
     set_events(fetch())
   return build_menu_contents()
