@@ -36,7 +36,7 @@ def build_menu_items(widgets):
   in the `config` dict corresponding to the widget's name. For example, a 
   widget `foo` would receive `config['foo']` as an argument to its `main`.
   TODO: DTD'''
-  widgets_xml = [w.main(config.get(w.__name__)) for w in widgets]
+  widgets_xml = [w.main(config.get(w.__name__.split('.')[-1])) for w in widgets]
   menu_xml = ET.Element('menu-base')
   for w in widgets_xml:
     if w.__class__.__name__ == 'Element':

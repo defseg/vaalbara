@@ -4,7 +4,8 @@ from urllib2 import urlopen
 import xml.etree.ElementTree as ET
 
 def main(config):
-	return fetch_all(['https://news.ycombinator.com/rss', 'https://lobste.rs/rss'])
+	# TODO: OPML import
+	return fetch_all(config['feeds'])
 
 def fetch_all(feeds):
 	menu = ET.Element('menu')
