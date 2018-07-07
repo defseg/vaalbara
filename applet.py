@@ -1,4 +1,4 @@
-from config import config, set_default
+from config import config, set_default, load_text
 import importlib, os, sys
 from menus.indicator import Indicator
 from menus.xml_to_obj import parse
@@ -37,7 +37,7 @@ def build_widget_configs(widgets, config):
     if _name(widget) not in config:
       if hasattr(widget, 'default'):
         set_default(_name(widget), widget.default)
-        config[_name(widget)] = pytoml.loads(widget.default) # TODO don't do this
+        config[_name(widget)] = load_text(widget.default) # TODO maybe make this better
       else:
         set_default(_name(widget), '# No defaults given')
 
