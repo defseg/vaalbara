@@ -3,7 +3,6 @@ import importlib, os, sys
 from menus.indicator import Indicator
 from menus.xml_to_obj import parse
 import xml.etree.ElementTree as ET
-import pytoml
 
 def main():
   widgets = get_widgets(config)

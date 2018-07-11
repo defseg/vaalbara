@@ -1,10 +1,12 @@
-# TODO need to figure out how to do refresh
+# TODO: 
+# - OPML import
+# - need to figure out how to do refresh
+# - should have bool in config: use user-defined names or the ones provided by the RSS feed?
 
 from urllib2 import urlopen
 import xml.etree.ElementTree as ET
 
 def main(config):
-	# TODO: OPML import
 	return fetch_all(config['feeds'])
 
 def fetch_all(feeds, menu = None):
