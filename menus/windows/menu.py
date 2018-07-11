@@ -16,7 +16,7 @@ def _build(obj):
 def _dispatch_item_action(obj):
   dispatcher = {
     'navigate': _curry(_navigate, obj.data.get('url')),
-    'quit': _do_nothing, # infi.systray handles appending a quit option - TODO move quit stuff to gtk from applet?
+    'quit': _do_nothing,
     None: None
   }
   return dispatcher[obj.action]
