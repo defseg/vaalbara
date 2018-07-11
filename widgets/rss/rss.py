@@ -7,11 +7,19 @@ def main(config):
 	# TODO: OPML import
 	return fetch_all(config['feeds'])
 
-def fetch_all(feeds):
-	menu = ET.Element('menu')
-	menu.text = 'RSS'
-	for feed in feeds:
-		menu.append(parse(fetch(feed)))
+def fetch_all(feeds, menu = None):
+	if menu is None:
+		menu = ET.Element('menu')
+		menu.text = 'RSS'
+	for name in feeds:
+		if feeds[name].__class__.__name__ == 'dict':
+			# it's a folder
+			submenu = ET.SubElement(menu, 'menu')
+			submenu.text = name
+			fetch_all(feeds[name], submenu)
+		else:
+			# if it's not a folder, assume it's a feed
+			menu.append(parse(fetch(feeds[name])))
 	return menu
 
 def fetch(feed):
