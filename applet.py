@@ -49,16 +49,23 @@ def build_menu_items(widgets):
   in the `config` dict corresponding to the widget's name. For example, a 
   widget `foo` would receive `config['foo']` as an argument to its `main`.
   TODO: DTD'''
-  widgets_xml = [w.main(config.get(_name(w))) for w in widgets]
   menu_xml = ET.Element('menu-base')
-  for w in widgets_xml:
-    if w.__class__.__name__ == 'Element':
-      menu_xml.append(w)
-    elif w.__class__.__name__ == 'str':
-      menu_xml.append(ET.fromstring(w))
-    else:
-      raise AppletError('Menu was given something besides an element or a str: {}'.format(w.__class__.__name__))
+  for w in widgets:
+    menu_xml.append(build_menu_item(w))
   return parse(menu_xml)
+
+def build_menu_item(widget):
+  '''Call one loaded widget to get its menu, and return an ElementTree element
+  containing the widget's menu.'''
+  res = widget.main(config.get(_name(widget)))
+  if res.__class__.__name__ == 'Element':
+    pass
+  elif w.__class__.__name__ == 'str':
+    res = ET.fromstring(res)
+  else:
+    raise AppletError('Menu was given something besides an element or a str: {}'.format(w.__class__.__name__))
+  # Later there will be a refresh option appended to all widgets. It'll go here.
+  return res
 
 def _name(widget):
   '''Get only the name of the widget, not the module path.'''
