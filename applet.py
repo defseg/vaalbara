@@ -7,9 +7,11 @@ import xml.etree.ElementTree as ET
 
 def main():
   widgets = get_widgets(config)
+  _print_loading_msg('All widgets loaded!')
   indicator = Indicator()
   build_dispatcher(widgets, indicator)
   indicator.set_menu(build_menu_items(widgets))
+  _print_loading_msg('All menus built!')
   indicator.go()
 
 def get_widgets(config):
@@ -23,6 +25,7 @@ def get_widgets(config):
   # Try to import all the widgets; skip anything that can't be imported
   def _import_widget(w):
     try:
+      _print_loading_msg('Loading module {}'.format(w))
       return importlib.import_module('widgets.{}'.format(w))
     except ImportError:
       print >> sys.stderr, 'Can\'t import widget {}\n'.format(w)
@@ -63,6 +66,7 @@ def build_menu_items(widgets):
 def build_menu_item(widget):
   '''Call one loaded widget to get its menu, and return an ElementTree element
   containing the widget's menu.'''
+  _print_loading_msg('Building menu for module {}'.format(_name(widget)))
   res = widget.main(config.get(_name(widget)))
   if res.__class__.__name__ == 'Element':
     pass
@@ -76,6 +80,12 @@ def build_menu_item(widget):
 def _name(widget):
   '''Get only the name of the widget, not the module path.'''
   return widget.__name__.split('.')[-1]
+
+def _print_loading_msg(text):
+  '''Print some loading messages if display_loading_msgs is set to true in the 
+  config.'''
+  if config.get('vaalbara') and config.get('vaalbara').get('display_loading_msgs'):
+    print text
 
 if __name__ == '__main__':
   main()
