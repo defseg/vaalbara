@@ -3,12 +3,11 @@ Taskbar indicator menu multitool made of widgets. Not ready for release yet; con
 
 Uses Python 2.7, but may at some point be ported to 3.
 
-# Dependencies
+# Requirements
 - `pytoml`
-- `infi.systray` for Windows
-- `PyGObject` for Linux (for now, you need support for `AppIndicator3`)
+- `PySide`
 
-The one currently existing widget needs `python-dateutil` (dateutil) and `bs4` (BeautifulSoup).
+The Boston Calendar widget needs `python_dateutil` (dateutil) and `bs4` (BeautifulSoup).
 
 # Configuration
 Vaalbara's config file lives in your OS's equivalent of `~/.vaalbara/config.ini`, and uses TOML.
