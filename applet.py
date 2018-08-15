@@ -1,12 +1,14 @@
 from config import config, set_default, load_text
 import importlib, os, sys
 from menus.indicator import Indicator
+from menus.dispatcher import Dispatcher
 from menus.xml_to_obj import parse
 import xml.etree.ElementTree as ET
 
 def main():
   widgets = get_widgets(config)
   indicator = Indicator()
+  build_dispatcher(widgets, indicator)
   indicator.set_menu(build_menu_items(widgets))
   indicator.go()
 
@@ -40,6 +42,10 @@ def build_widget_configs(widgets, config):
       else:
         set_default(_name(widget), '# No defaults given')
 
+def build_dispatcher(widgets, indicator):
+  Dispatcher({
+    'refresh_all': lambda: indicator.set_menu(build_menu_items(widgets))
+  })
 
 def build_menu_items(widgets):
   '''Call every loaded widget and concat them together into an XML description

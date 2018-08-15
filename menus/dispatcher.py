@@ -21,6 +21,8 @@ class Dispatcher:
 
     @staticmethod 
     def get(obj):
+        if obj.__class__.__name__ == 'str':
+            return Dispatcher.__instance.__funcs[obj]
         return _curry(Dispatcher.__instance.__funcs[obj.action], obj)
 
 def _curry(func, arg):
@@ -32,5 +34,3 @@ def _navigate(obj):
 
 def _quit(obj):
 	qApp.quit()
-
-Dispatcher({})

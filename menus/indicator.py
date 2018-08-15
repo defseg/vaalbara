@@ -10,8 +10,13 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
         self.setContextMenu(self.menu)
 
     def add_needed_items(self):
+        refresh_option = self.menu.addAction('Refresh all')
+        refresh_option.triggered.connect(Dispatcher.get('refresh_all'))
         quit_option = self.menu.addAction('Quit')
         quit_option.triggered.connect(QtGui.qApp.quit)
+
+    def clear_menu(self):
+        self.menu.clear()
 
 class BaseMenu(QtGui.QMenu):
     def __init__(self):
@@ -46,6 +51,7 @@ class Indicator():
         self.icon    = SystemTrayIcon(icon_graphic)
 
     def set_menu(self, menu_base):
+        self.icon.clear_menu()
         for w in menu_base.items:
             self.icon.menu.add_widget(w)
         self.icon.add_needed_items()
