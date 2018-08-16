@@ -5,8 +5,8 @@ class Dispatcher:
     '''Dispatcher singleton so we can pass in methods from the applet without
     having to keep passing dictionaries into QtMenu.
     	The dispatcher is initialized with a dictionary of functions, to which
-    some default functions are appended. All these functions take one argument:
-    the menu item to which they're associated.'''
+    some default functions are appended. Most of these functions take one 
+    argument: the menu item to which they're associated. Some take no arguments.'''
     __instance = None
 
     def __init__(self, funcs):

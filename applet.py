@@ -46,9 +46,14 @@ def build_widget_configs(widgets, config):
         set_default(_name(widget), '# No defaults given')
 
 def build_dispatcher(widgets, indicator):
-  Dispatcher({
-    'refresh_all': lambda: indicator.set_menu(build_menu_items(widgets))
-  })
+  defaults = {
+    'refreshall': lambda: indicator.set_menu(build_menu_items(widgets))
+  }
+
+  for w in widgets:
+    defaults['refresh_'+_name(w)] = lambda x: indicator.update_widget(parse(build_menu_item(w)))
+
+  Dispatcher(defaults)
 
 def build_menu_items(widgets):
   '''Call every loaded widget and concat them together into an XML description
@@ -74,7 +79,9 @@ def build_menu_item(widget):
     res = ET.fromstring(res)
   else:
     raise AppletError('Menu was given something besides an element or a str: {}'.format(w.__class__.__name__))
-  # Later there will be a refresh option appended to all widgets. It'll go here.
+  # Append refresh option.
+  refresh = ET.SubElement(res, 'item', {'action': 'refresh_'+_name(widget)})
+  refresh.text = 'Refresh'
   return res
 
 def _name(widget):
