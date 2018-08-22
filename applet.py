@@ -47,11 +47,9 @@ def build_widget_configs(widgets, config):
 
 def build_dispatcher(widgets, indicator):
   defaults = {
-    'refreshall': lambda: indicator.set_menu(build_menu_items(widgets))
+    'refreshall': lambda: indicator.set_menu(build_menu_items(widgets)),
+    'refresh'   : lambda w: indicator.update_widget(parse(build_by_name(widgets, w.data['name'])))
   }
-
-  for w in widgets:
-    defaults['refresh_'+_name(w)] = lambda x: indicator.update_widget(parse(build_menu_item(w)))
 
   Dispatcher(defaults)
 
@@ -80,9 +78,15 @@ def build_menu_item(widget):
   else:
     raise AppletError('Menu was given something besides an element or a str: {}'.format(w.__class__.__name__))
   # Append refresh option.
-  refresh = ET.SubElement(res, 'item', {'action': 'refresh_'+_name(widget)})
+  refresh = ET.SubElement(res, 'item', {'action': 'refresh', 'name': _name(widget)})
   refresh.text = 'Refresh'
   return res
+
+def build_by_name(widgets, w_name):
+  # TODO: probably want to make this not O(n) at some point
+  for w in widgets:
+    if _name(w) == w_name:
+      return build_menu_item(w)
 
 def _name(widget):
   '''Get only the name of the widget, not the module path.'''
