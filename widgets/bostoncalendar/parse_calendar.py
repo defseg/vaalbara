@@ -32,7 +32,7 @@ def set_events(soup):
 def fetch():
   html = urlopen('http://www.thebostoncalendar.com/').read()
   strainer = SoupStrainer('li', class_='event')
-  return BeautifulSoup(html, parse_only=strainer)
+  return BeautifulSoup(html, 'html.parser', parse_only=strainer)
 
 def parse(soup):
   return [parse_one(li) for li in soup.find_all('li')]
