@@ -55,7 +55,7 @@ class MenuItem:
     self.data = data
     self.action = action
   def __repr__(self):
-    return 'MenuItem: {}'.format(self.text)
+    return 'MenuItem: {} - Data: {}'.format(self.text, self.data)
 
 class MenuParserError(Exception):
   pass
