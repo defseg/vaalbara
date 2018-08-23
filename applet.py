@@ -16,7 +16,7 @@ def main():
 
 def get_widgets(config):
   '''Try to import every subdirectory of widgets/ except those listed in config['disabled_widgets'].'''
-  # Get all subdirectories of widgets/
+  # get all subdirectories of widgets/
   # This is a little hairy, but it should work...
   here = os.path.split(os.path.abspath(sys.argv[0]))[0]
   widget_list = next(os.walk(os.path.join(here, 'widgets')))[1]
@@ -41,7 +41,7 @@ def build_widget_configs(widgets, config):
     if _name(widget) not in config:
       if hasattr(widget, 'default'):
         set_default(_name(widget), widget.default)
-        config[_name(widget)] = load_text(widget.default) # TODO maybe make this better
+        config[_name(widget)] = load_text(widget.default)[_name(widget)] # TODO maybe make this better
       else:
         set_default(_name(widget), '# No defaults given')
 
