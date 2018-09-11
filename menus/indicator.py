@@ -1,13 +1,17 @@
 from PySide import QtGui
 from dispatcher import Dispatcher
 from xml_to_obj import MenuItem
-import sys
+import sys, signal
 
 class SystemTrayIcon(QtGui.QSystemTrayIcon):
     def __init__(self, icon, parent=None):
         QtGui.QSystemTrayIcon.__init__(self, icon, parent)
         self.menu = BaseMenu()
         self.setContextMenu(self.menu)
+        # Set up Ctrl+C handling. 
+        # Could be done differently - see https://coldfix.eu/2016/11/08/pyqt-boilerplate/#keyboardinterrupt-ctrl-c
+        # But this way is simpler and a little faster.
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     def add_needed_items(self):
         refresh_option = self.menu.addAction('Refresh all')
