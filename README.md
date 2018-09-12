@@ -1,7 +1,5 @@
 # vaalbara
-Taskbar indicator menu multitool made of widgets. Not ready for release yet; consider the current version to be `-1.NaN.NaN`.
-
-Uses Python 2.7, but may at some point be ported to 3.
+Taskbar indicator menu multitool made of widgets. Uses Python 2.7, but may at some point be ported to 3.
 
 # Requirements
 - `pytoml`
