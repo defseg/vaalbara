@@ -21,17 +21,17 @@ def get_widgets(config):
   here = os.path.split(os.path.abspath(sys.argv[0]))[0]
   widget_list = next(os.walk(os.path.join(here, 'widgets')))[1]
   # Filter out disabled widgets
-  widget_list = [w for w in widget_list if w not in config['vaalbara'].get('disabled_widgets')]
+  widget_list = [w for w in widget_list if w not in config['vaalbara'].get('disabled_widgets') and w != '__pycache__']
   # Try to import all the widgets; skip anything that can't be imported
   def _import_widget(w):
     try:
       _print_loading_msg('Loading module {}'.format(w))
       return importlib.import_module('widgets.{}'.format(w))
     except ImportError:
-      print >> sys.stderr, 'Can\'t import widget {}\n'.format(w)
+      print('Can\'t import widget {}\n'.format(w), file=sys.stderr)
       return None
   # Can't have _import_widget return nothing at all, so filter out the Nones
-  widgets = filter(None, (_import_widget(w) for w in widget_list))
+  widgets = [_f for _f in (_import_widget(w) for w in widget_list) if _f]
   # Make sure each widget has a config; if one doesn't, try to load its default
   build_widget_configs(widgets, config)
   return widgets
@@ -96,7 +96,7 @@ def _print_loading_msg(text):
   '''Print some loading messages if display_loading_msgs is set to true in the 
   config.'''
   if config.get('vaalbara') and config.get('vaalbara').get('display_loading_msgs'):
-    print text
+    print(text)
 
 if __name__ == '__main__':
   main()

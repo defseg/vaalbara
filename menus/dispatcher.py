@@ -1,5 +1,5 @@
 from webbrowser import open as open_in_browser
-from PySide.QtGui import qApp
+from PySide2.QtGui import qApp
 
 class Dispatcher:
     '''Dispatcher singleton so we can pass in methods from the applet without

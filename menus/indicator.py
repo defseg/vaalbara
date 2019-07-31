@@ -1,11 +1,12 @@
-from PySide import QtGui
-from dispatcher import Dispatcher
-from xml_to_obj import MenuItem
+from PySide2 import QtGui
+from PySide2.QtWidgets import QSystemTrayIcon, QMenu, QApplication, QStyle
+from .dispatcher import Dispatcher
+from .xml_to_obj import MenuItem
 import sys, signal
 
-class SystemTrayIcon(QtGui.QSystemTrayIcon):
+class SystemTrayIcon(QSystemTrayIcon):
     def __init__(self, icon, parent=None):
-        QtGui.QSystemTrayIcon.__init__(self, icon, parent)
+        QSystemTrayIcon.__init__(self, icon, parent)
         self.menu = BaseMenu()
         self.setContextMenu(self.menu)
         # Set up Ctrl+C handling. 
@@ -22,9 +23,9 @@ class SystemTrayIcon(QtGui.QSystemTrayIcon):
     def clear_menu(self):
         self.menu.clear()
 
-class BaseMenu(QtGui.QMenu):
+class BaseMenu(QMenu):
     def __init__(self):
-        QtGui.QMenu.__init__(self, "")
+        QMenu.__init__(self, "")
         self.widgets = {}
 
     def add_widget(self, menu):
@@ -36,9 +37,9 @@ class BaseMenu(QtGui.QMenu):
         assert menu.__class__.__name__ == "Menu"
         self.widgets[menu.text].refresh(menu)
 
-class QtMenu(QtGui.QMenu):
+class QtMenu(QMenu):
     def __init__(self, menu, parent=None):
-        QtGui.QMenu.__init__(self, menu.text, parent)
+        QMenu.__init__(self, menu.text, parent)
         self.__add_all(menu)
 
     def refresh(self, menu):
@@ -61,8 +62,8 @@ class QtMenu(QtGui.QMenu):
 
 class Indicator():
     def __init__(self):
-        self.app       = QtGui.QApplication(sys.argv)
-        icon_graphic   = QtGui.QApplication.style().standardIcon(QtGui.QStyle.SP_DriveDVDIcon)
+        self.app       = QApplication(sys.argv)
+        icon_graphic   = QApplication.style().standardIcon(QStyle.SP_DriveDVDIcon)
         self.icon      = SystemTrayIcon(icon_graphic)
         self.icon_menu = self.icon.menu # let's just put this here 
 

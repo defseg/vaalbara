@@ -3,7 +3,7 @@ Taskbar indicator menu multitool made of widgets. Uses Python 2.7, but may at so
 
 # Requirements
 - `pytoml`
-- `PySide`
+- `PySide2`
 
 The Boston Calendar widget needs `python_dateutil` (dateutil) and `bs4` (BeautifulSoup).
 

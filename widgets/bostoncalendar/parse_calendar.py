@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup, SoupStrainer, NavigableString
-from urllib2 import urlopen
+from urllib.request import urlopen
 import xml.etree.ElementTree as ET
-from bucket_schemas import boston_calendar_schema
+from .bucket_schemas import boston_calendar_schema
 import datetime
 
 def build_calendar_items(config):
@@ -10,7 +10,7 @@ def build_calendar_items(config):
 
 def build_menu_contents(events):
   bucketing = boston_calendar_schema.bucketize(events)
-  bucketing_keys = bucketing.keys()
+  bucketing_keys = list(bucketing.keys())
   main_menu = ET.Element('menu')
   main_menu.text = 'Boston Calendar'
   for i in bucketing_keys:

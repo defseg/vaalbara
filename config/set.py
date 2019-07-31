@@ -1,4 +1,4 @@
-from get import config_loc
+from .get import config_loc
 import pytoml
 
 def set_default(widget_name, default):

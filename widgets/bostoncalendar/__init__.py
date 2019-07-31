@@ -1,1 +1,1 @@
-from parse_calendar import build_calendar_items as main
+from .parse_calendar import build_calendar_items as main

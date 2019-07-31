@@ -1,5 +1,5 @@
 # We don't have caching yet, so stub out the stuff that hits any URLs.
-from bucket_schemas import boston_calendar_schema
+from .bucket_schemas import boston_calendar_schema
 import xml.etree.ElementTree as ET
 
 _events = []
@@ -10,10 +10,9 @@ _events.append({'title':'Test item 4', 'action':'navigate', 'time':'Wednesday, M
 
 def build_menu_contents(events):
   bucketing = boston_calendar_schema.bucketize(events)
-  bucketing_keys = bucketing.keys()
+  bucketing_keys = list(bucketing.keys())
   main_menu = ET.Element('menu')
   main_menu.text = 'Boston Calendar'
-  print bucketing
   for i in bucketing_keys:
     if bucketing[i]: # time block - contains array of dicts
       bucket = ET.SubElement(main_menu, 'menu')

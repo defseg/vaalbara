@@ -34,10 +34,10 @@ class BucketSchema:
     Returns:
       OrderedDict(name_order: [Maybe item], name_order: [Maybe item])'''
     bucketing = OrderedDict()
-    for k in sorted(self.buckets.iterkeys()):
+    for k in sorted(self.buckets.keys()):
       bucketing[k] = []
     for item in items:
-      for k in self.buckets.iterkeys():
+      for k in self.buckets.keys():
         if self.buckets[k].test(item):
           bucketing[k].append(item)
           break

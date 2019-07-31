@@ -1,4 +1,4 @@
-from rss import main
+from .rss import main
 
 default = '''# Store your list of feeds as key-value pairs here:
 [rss.feeds]
